@@ -4,18 +4,10 @@ import { RouterContext, match } from 'react-router';
 
 import express from 'express';
 
-//import ContextProvider from '../common/components/context';
 import { Provider } from 'react-tunnel';
 import Root from '../common/components/root';
 import AppState from '../common/stores/appstate';
 import routes from '../common/routes';
-
-/*const React = require('react');
-const renderToString = require('react-dom/server').renderToString;
-const Koa = require('koa');
-const serve = require('koa-static');
-const Root = require('../common/components/root');
-const AppState = require('../common/stores/appstate').default;*/
 
 const app = express();
 const appstate = new AppState();
@@ -27,12 +19,6 @@ const renderView = (renderProps) => {
             { (() => <RouterContext {...renderProps} />) }
         </Provider>
     );
-    
-    /*const componentHTML = renderToString(
-        <ContextProvider appstate={ store }>
-            <RouterContext {...renderProps} />
-        </ContextProvider>
-    );*/
 
     const initialState = { appstate };
 
