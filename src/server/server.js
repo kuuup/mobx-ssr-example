@@ -1,10 +1,10 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { RouterContext, match } from 'react-router';
+import { Provider } from 'react-tunnel';
 
 import express from 'express';
 
-import { Provider } from 'react-tunnel';
 import Root from '../common/components/root';
 import AppState from '../common/stores/appstate';
 import routes from '../common/routes';
@@ -14,29 +14,27 @@ const appstate = new AppState();
 appstate.addItem('foo');
 appstate.addItem('bar');
 
+const initialState = { appstate };
+
 const renderView = (renderProps) => {
     
     const componentHTML = renderToString(
-        <Provider provide={{ appstate: appstate }}>
+        <Provider provide={ initialState }>
             { (() => <RouterContext {...renderProps} />) }
         </Provider>
     );
-
-    const initialState = { appstate };
 
     const HTML = `
         <!DOCTYPE html>
         <html>
             <head>
-            
                 <meta charset="utf-8">
                 <title>MobX Test</title>
                 <script>
                     window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};
                 </script>
-                
             </head>
-            <body style="background-color:rgb(255, 255, 255)">
+            <body>
                 <div id="root">${componentHTML}</div>
                 <script type="application/javascript" src="/bundle.js"></script>
             </body>
