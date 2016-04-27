@@ -3,7 +3,7 @@ import { observable } from 'mobx';
 export default class AppState {
     
   @observable 
-  items = ['foo', 'bar'];
+  items = [];
 
   constructor() {
     this.addItem = this.addItem.bind(this);

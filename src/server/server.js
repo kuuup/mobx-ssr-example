@@ -11,6 +11,8 @@ import routes from '../common/routes';
 
 const app = express();
 const appstate = new AppState();
+appstate.addItem('foo');
+appstate.addItem('bar');
 
 const renderView = (renderProps) => {
     
