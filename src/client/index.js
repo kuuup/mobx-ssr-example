@@ -6,12 +6,10 @@ import { render } from 'react-dom';
 import { Router, browserHistory } from 'react-router';
 import { Provider } from 'react-tunnel';
 
-import Root from '../common/components/root';
 import AppState from '../common/stores/appstate';
 import routes from '../common/routes';
 
-const initialState = window.__INITIAL_STATE__ || {};
-const appstate = AppState.fromJS(initialState || []);
+const appstate = new AppState(window.__INITIAL_STATE__);
 
 render(
     <Provider provide={{ appstate: appstate }}>
