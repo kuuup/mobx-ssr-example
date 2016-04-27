@@ -4,8 +4,7 @@ export default class AppState {
     
   @observable 
   items = ['foo', 'bar'];
-  
-  
+
   constructor() {
     this.addItem = this.addItem.bind(this);
   }
@@ -15,8 +14,8 @@ export default class AppState {
   }
   
   static fromJS(state) {
-	  const appState = new AppState();
-		appState.items = state.appstate.items;
-		return appState;
-	}
+    const appState = new AppState();
+    appState.items = state.appstate.items;
+    return appState;
+  }
 }
