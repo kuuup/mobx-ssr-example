@@ -10,13 +10,8 @@ import AppState from '../common/stores/appstate';
 import routes from '../common/routes';
 
 const app = express();
-const appstate = new AppState();
-appstate.addItem('foo');
-appstate.addItem('bar');
 
-const initialState = { appstate };
-
-const renderView = (renderProps) => {
+const renderView = (renderProps, initialState) => {
     
     const componentHTML = renderToString(
         <Provider provide={ initialState }>
@@ -56,7 +51,12 @@ app.use((req, res) => {
     
         if(!renderProps) return res.status(404).end('Not found');
         
-        res.send(renderView(renderProps));
+        const appstate = new AppState();
+        appstate.addItem('foo');
+        appstate.addItem('bar');
+        const initialState = { appstate };
+
+        res.send(renderView(renderProps, initialState));
     });
 });
 
