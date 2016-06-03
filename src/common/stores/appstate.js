@@ -1,4 +1,4 @@
-import { observable } from 'mobx';
+import { observable, action } from 'mobx';
 
 export default class AppState {
     
@@ -9,6 +9,7 @@ export default class AppState {
     this.addItem = this.addItem.bind(this);
   }
 
+  @action
   addItem(item) {
     this.items.push(item);
   }
