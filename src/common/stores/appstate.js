@@ -2,16 +2,21 @@ import { observable, action } from 'mobx';
 
 export default class AppState {
     
-  @observable items;
+  @observable items = [];
 
   constructor(initialState) {
-    this.items = initialState ? initialState.appstate.items : [];
-    this.addItem = this.addItem.bind(this);
+    this.items = initialState && initialState.appstate && initialState.appstate.items ? initialState.appstate.items : [];
   }
-
+  
   @action
   addItem(item) {
     this.items.push(item);
   }
   
+  toJson() {
+    return {
+      items: this.items
+    };
+  }
 }
+

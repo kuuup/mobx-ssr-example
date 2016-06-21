@@ -11,13 +11,16 @@ import routes from '../common/routes';
 
 const app = express();
 
-const renderView = (renderProps, initialState) => {
+
+const renderView = (renderProps, appstate) => {
     
     const componentHTML = renderToString(
-        <Provider provide={ initialState }>
+        <Provider provide={{ appstate: appstate }}>
             { (() => <RouterContext {...renderProps} />) }
         </Provider>
     );
+    
+    const initialState = { appstate: appstate.toJson() };
 
     const HTML = `
         <!DOCTYPE html>
@@ -26,7 +29,7 @@ const renderView = (renderProps, initialState) => {
                 <meta charset="utf-8">
                 <title>MobX Test</title>
                 <script>
-                    window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};
+                    window.__INITIAL_STATE__ = ${ JSON.stringify(initialState) };
                 </script>
             </head>
             <body>
@@ -54,9 +57,8 @@ app.use((req, res) => {
         const appstate = new AppState();
         appstate.addItem('foo');
         appstate.addItem('bar');
-        const initialState = { appstate };
 
-        res.send(renderView(renderProps, initialState));
+        res.send(renderView(renderProps, appstate));
     });
 });
 
