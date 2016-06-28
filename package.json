@@ -15,14 +15,15 @@
   },
   "license": "MIT",
   "dependencies": {
+    "babel-core": "^6.10.4",
     "babel-polyfill": "^6.9.1",
+    "babel-preset-react": "^6.11.1",
     "express": "^4.14.0",
-    "mobx": "^2.3.2",
-    "mobx-react": "^3.3.1",
+    "mobx": "^2.3.3",
+    "mobx-react": "^3.4.0",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
-    "react-router": "^2.4.1",
-    "react-tunnel": "^0.1.0"
+    "react-router": "^2.5.1"
   },
   "devDependencies": {
     "babel-core": "^6.7.7",

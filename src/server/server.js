@@ -1,7 +1,7 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { RouterContext, match } from 'react-router';
-import { Provider } from 'react-tunnel';
+import { Provider } from 'mobx-react';
 
 import express from 'express';
 
@@ -15,8 +15,8 @@ const app = express();
 const renderView = (renderProps, appstate) => {
     
     const componentHTML = renderToString(
-        <Provider provide={{ appstate: appstate }}>
-            { (() => <RouterContext {...renderProps} />) }
+        <Provider appstate={ appstate }>
+            <RouterContext {...renderProps} />
         </Provider>
     );
     

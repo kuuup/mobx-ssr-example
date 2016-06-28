@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { observer } from "mobx-react";
-import { inject } from 'react-tunnel';
 
-@inject(provided => ({ appstate: provided.appstate }))
-@observer
+@observer(['appstate'])
 export default class Root extends Component {
     
     constructor(props) {
@@ -31,9 +29,3 @@ export default class Root extends Component {
         );
     }
 }
-
-/* Or without decorators */
-
-/*export default inject(provided => ({
-    appstate: provided.appstate
-}))(observer(Root));*/
