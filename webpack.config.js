@@ -18,7 +18,6 @@ module.exports = {
         net: 'empty',
         tls: 'empty'
     },
-    devtool: 'inline-source-map',
     module: {
         rules: [{
             test: /\.js$/,
