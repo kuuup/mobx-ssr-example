@@ -6,7 +6,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'mobx-react';
 
-import Router, { routes } from '../common/router';
+import Router from '../common/router';
 import AppState from '../common/stores/appstate';
 
 declare var window: {
