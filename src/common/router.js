@@ -1,5 +1,5 @@
 /* @flow */
-import React, { Component } from 'react';
+import React from 'react';
 import Root from './components/root';
 
 type Props = {
@@ -9,19 +9,6 @@ type Props = {
 export const routes: Map<string, React$Element<*>> = new Map();
 routes.set('/', <Root />);
 
-export default class Router extends Component {
-
-    props: Props;
-
-    constructor(props: Props) {
-        super(props);
-    }
-
-    render() {
-        if(this.props.path && routes.has(this.props.path))
-            return routes.get(this.props.path)
-
-        return null;
-    }
-
+export default function router(props: Props) {
+    return props.path && routes.has(props.path) ? routes.get(props.path) : null;
 }
