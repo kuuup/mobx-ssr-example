@@ -1,26 +1,22 @@
+/* @flow */
+import { createServer } from 'http';
+import fs from 'fs';
+import path from 'path';
+
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { RouterContext, match } from 'react-router';
 import { Provider } from 'mobx-react';
 
-import express from 'express';
-
-import Root from '../common/components/root';
+import Router, { routes } from '../common/router';
 import AppState from '../common/stores/appstate';
-import routes from '../common/routes';
 
-const app = express();
+const renderView = (req, appstate) => {
 
-
-const renderView = (renderProps, appstate) => {
-    
     const componentHTML = renderToString(
         <Provider appstate={ appstate }>
-            <RouterContext {...renderProps} />
+            <Router path={ req.url } />
         </Provider>
     );
-    
-    const initialState = { appstate: appstate.toJson() };
 
     const HTML = `
         <!DOCTYPE html>
@@ -29,7 +25,7 @@ const renderView = (renderProps, appstate) => {
                 <meta charset="utf-8">
                 <title>MobX Test</title>
                 <script>
-                    window.__INITIAL_STATE__ = ${ JSON.stringify(initialState) };
+                    window.__INITIAL_STATE__ = ${ JSON.stringify({ appstate: appstate.toJson() }) };
                 </script>
             </head>
             <body>
@@ -42,25 +38,29 @@ const renderView = (renderProps, appstate) => {
     return HTML;
 };
 
-app.use(express.static(__dirname + '/../../dist/'));
+createServer((req, res) => {
 
-app.use((req, res) => {
-    match({ routes, location: req.url }, (err, redirectLocation, renderProps) => {
-        
-        if(err) {
-          console.error(err);
-          return res.status(500).end('Internal server error');
+    if(req.url === '/bundle.js') {
+        res.writeHead(200, {'Content-Type': 'text/javascript'});
+        fs.createReadStream(path.resolve(__dirname, '../../dist/bundle.js')).pipe(res);
+    } else {
+
+        if(routes.has(req.url)) {
+
+            const appstate = new AppState();
+            appstate.addItem('foo');
+            appstate.addItem('bar');
+
+            res.write(renderView(req, appstate));
+            res.end();
+
+        } else {
+
+            res.writeHead(200, {'Content-Type': 'text/plain'});
+            res.write('404 Not Found\n');
+            res.end();
+
         }
-    
-        if(!renderProps) return res.status(404).end('Not found');
-        
-        const appstate = new AppState();
-        appstate.addItem('foo');
-        appstate.addItem('bar');
+    }
 
-        res.send(renderView(renderProps, appstate));
-    });
-});
-
-
-app.listen(3000);
+}).listen(3000)
