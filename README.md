@@ -1,6 +1,5 @@
 # mobx-ssr-example
-Server-side rendering with mobx and react-router
-
+Server-side rendering with mobx
 #Build and run
 ```
 npm install
