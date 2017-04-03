@@ -1,7 +1,7 @@
 # mobx-ssr-example
 Server-side rendering with mobx
 
-#Build and run
+# Build and run
 ```
 npm install
 npm run build:client
