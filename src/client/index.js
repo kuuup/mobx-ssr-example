@@ -6,7 +6,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'mobx-react';
 
-import { BrowserRouter as Router, Match } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import AppState from '../common/stores/appstate';
 import Routes from '../common/components/routes';
 
