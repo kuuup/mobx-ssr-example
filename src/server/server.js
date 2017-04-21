@@ -7,14 +7,18 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'mobx-react';
 
-import Router, { routes } from '../common/router';
+import { StaticRouter as Router } from 'react-router';
 import AppState from '../common/stores/appstate';
+import Routes from '../common/components/routes';
 
 const renderView = (req, appstate) => {
 
+    const context = {};
     const componentHTML = renderToString(
         <Provider appstate={ appstate }>
-            <Router path={ req.url } />
+            <Router location={ req.url } context={ context }>
+                <Routes />
+            </Router>
         </Provider>
     );
 
@@ -44,23 +48,13 @@ createServer((req, res) => {
         res.writeHead(200, {'Content-Type': 'text/javascript'});
         fs.createReadStream(path.resolve(__dirname, '../../dist/bundle.js')).pipe(res);
     } else {
+        const appstate = new AppState();
+        appstate.addItem('foo');
+        appstate.addItem('bar');
 
-        if(routes.has(req.url)) {
-
-            const appstate = new AppState();
-            appstate.addItem('foo');
-            appstate.addItem('bar');
-
-            res.write(renderView(req, appstate));
-            res.end();
-
-        } else {
-
-            res.writeHead(200, {'Content-Type': 'text/plain'});
-            res.write('404 Not Found\n');
-            res.end();
-
-        }
+        res.write(renderView(req, appstate));
+        res.end();
     }
 
 }).listen(3000)
+
