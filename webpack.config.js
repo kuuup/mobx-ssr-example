@@ -20,6 +20,15 @@ module.exports = {
     },
     module: {
         rules: [{
+            test: /(\.md|\.map)$/,
+            loader: 'null-loader'
+        },
+        {
+            test: /\.js$/,
+            exclude: '/node_modules/',
+            loader: "transform-loader?brfs"
+        },
+        {
             test: /\.js$/,
             use: [{
                 loader: 'babel-loader',
