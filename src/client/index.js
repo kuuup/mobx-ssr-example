@@ -18,12 +18,13 @@ declare var window: {
 };
 
 const appstate = new AppState(window.__INITIAL_STATE__);
-
-render(
-    <Provider appstate={ appstate }>
-        <Router>
-            <Routes />
-        </Router>
-    </Provider>,
-    document.getElementById('root')
-);
+const element = document.getElementById('root');
+if(element)
+    render(
+        <Provider appstate={ appstate }>
+            <Router>
+                <Routes />
+            </Router>
+        </Provider>,
+        element
+    );

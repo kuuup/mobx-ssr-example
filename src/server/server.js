@@ -7,7 +7,7 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'mobx-react';
 
-import { StaticRouter as Router } from 'react-router';
+import { StaticRouter as Router } from 'react-router-dom';
 import AppState from '../common/stores/appstate';
 import Routes from '../common/components/routes';
 
@@ -57,4 +57,3 @@ createServer((req, res) => {
     }
 
 }).listen(3000)
-
