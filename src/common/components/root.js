@@ -1,5 +1,5 @@
 /* @flow */
-import React, { Component } from 'react';
+import * as React from 'react';
 import { observer, inject } from "mobx-react";
 import AppState from '../stores/appstate';
 
@@ -11,13 +11,11 @@ type Props = {
 
 @inject('appstate')
 @observer
-export default class Root extends Component {
+export default class Root extends React.Component<Props> {
 
     static defaultProps = {
         appstate: new AppState()
     };
-
-    props: Props;
 
     constructor(props: Props) {
         super(props);
