@@ -24,7 +24,7 @@
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-router-dom": "^4.2.2",
-    "socket.io": "^2.0.4",
+    "socket.io": "^1.7.4",
     "utf-8-validate": "^3.0.3"
   },
   "devDependencies": {
